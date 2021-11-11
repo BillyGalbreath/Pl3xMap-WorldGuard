@@ -7,6 +7,8 @@ import org.bukkit.plugin.Plugin;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Config {
     public static String CONTROL_LABEL = "WorldGuard";
@@ -18,6 +20,7 @@ public class Config {
     public static double STROKE_OPACITY = 1.0D;
     public static Color FILL_COLOR = Color.GREEN;
     public static double FILL_OPACITY = 0.2D;
+    public static List<String> HIDDEN_REGIONS = new ArrayList<>();
     public static String CLAIM_TOOLTIP = "<span style=\"font-size:120%;\">{regionname}</span><br />" +
             "Owner <span style=\"font-weight:bold;\">{playerowners}</span><br />" +
             "Flags<br /><span style=\"font-weight:bold;\">{flags}</span>";
@@ -33,6 +36,7 @@ public class Config {
         FILL_COLOR = getColor("settings.style.fill.color", FILL_COLOR);
         FILL_OPACITY = getDouble("settings.style.fill.opacity", FILL_OPACITY);
         CLAIM_TOOLTIP = getString("settings.region.tooltip", CLAIM_TOOLTIP);
+        HIDDEN_REGIONS = getStringList("settings.control.hidden-regions", HIDDEN_REGIONS);
     }
 
     public static void reload(Plugin plugin) {
@@ -64,6 +68,11 @@ public class Config {
     private static String getString(String path, String def) {
         yaml.addDefault(path, def);
         return yaml.getString(path, yaml.getString(path));
+    }
+
+    private static List<String> getStringList(String path, List def) {
+        yaml.addDefault(path, def);
+        return yaml.getStringList(path);
     }
 
     private static boolean getBoolean(String path, boolean def) {

@@ -45,7 +45,9 @@ public class Pl3xMapTask extends BukkitRunnable {
         if (regions == null) {
             return;
         }
-        regions.forEach((id, region) -> handleClaim(region));
+        regions.forEach((id, region) -> {
+            if (!Config.HIDDEN_REGIONS.contains(id)) handleClaim(region);
+        });
     }
 
     private void handleClaim(ProtectedRegion region) {
